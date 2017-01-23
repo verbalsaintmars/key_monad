@@ -1,0 +1,13 @@
+Example 3
+
+Keys:
+['rootuser', 'TEST_NONE']
+
+Absolute keys:
+['rootuser', 'TEST_NONE']
+
+Result:
+{
+    "TEST_NONE": null, 
+    "rootuser": ""
+}

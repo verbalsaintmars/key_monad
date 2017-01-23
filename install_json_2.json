@@ -1,0 +1,10 @@
+{ 
+  "site_type": "dev",
+  "nfs_location": "nfs://install_json_2_nfs_url.iso",
+  "install_json": {
+        "layer_2": {
+            "nfs_location": "nfs://layer2_nfs_locaion"
+        },
+        "seed_ilom": "SOME_ILOM_INFO"
+  }
+}

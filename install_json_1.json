@@ -1,0 +1,17 @@
+{ 
+  "site_type": "dev",
+  "node_type": "x5",
+  "nfs_location": "nfs://install_json_2_nfs_url.iso",
+  "install_json": {
+        "layer_2": {
+            "nfs_location": "nfs://layer2_nfs_locaion"
+        },
+        "seed_ilom": "SOME_ILOM_INFO",
+        "admin_email":"jjj@xx.com",
+        "controlplane_ilom":[
+        "x1",
+        "x2"
+        ],
+        "rootuser":""
+  }
+}

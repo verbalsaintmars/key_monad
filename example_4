@@ -1,0 +1,24 @@
+Example 4
+
+Keys:
+['seed_ilom', 'rootuser', 'nfs_location']
+
+Absolute keys:
+['install_json/seed_ilom', 'rootuser', 'nfs_location']
+
+Result:
+{
+    "nfs_location": "install_json_2_nfs_url.iso", 
+    "rootuser": "PICACHO", 
+    "seed_ilom": "SOME_ILOM_INFO"
+}
+Example 4
+
+Keys:
+[]
+
+Absolute keys:
+[]
+
+Result:
+{}

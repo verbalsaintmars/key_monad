@@ -1,0 +1,18 @@
+Example 1
+
+Keys:
+['controlplane_ilom', 'rootuser', 'node_type', 'admin_email']
+
+Absolute keys:
+['install_json/controlplane_ilom', 'install_json/rootuser', 'node_type', 'install_json/admin_email']
+
+Result:
+{
+    "admin_email": "jjj@xx.com", 
+    "controlplane_ilom": [
+        "x1", 
+        "x2"
+    ], 
+    "node_type": "x5", 
+    "rootuser": "PICACHO"
+}

@@ -1,0 +1,20 @@
+Example 2
+
+Keys:
+['controlplane_ilom', 'rootuser', 'seed_ilom', 'nfs_location', 'node_type', 'admin_email']
+
+Absolute keys:
+['install_json/controlplane_ilom', 'nfs_location', 'node_type', 'install_json/admin_email', 'install_json/seed_ilom', 'install_json/rootuser']
+
+Result:
+{
+    "admin_email": "jjj@xx.com", 
+    "controlplane_ilom": [
+        "x1", 
+        "x2"
+    ], 
+    "nfs_location": "install_json_2_nfs_url.iso", 
+    "node_type": "x5", 
+    "rootuser": "PICACHO", 
+    "seed_ilom": "SOME_ILOM_INFO"
+}
