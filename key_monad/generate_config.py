@@ -1,5 +1,5 @@
-from key_monad import key_monad
-from fmap_monad import aggregate_map
+from .key_monad import key_monad
+from .fmap_monad import aggregate_map
 
 
 def generate_config(config, keys):

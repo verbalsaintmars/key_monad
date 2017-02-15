@@ -1,17 +1,13 @@
 import collections
 import uuid
 
-from common_func import get_dict_obj
+from .common_func import get_dict_obj
 
 
 class key_monad(object):
     """
     Context is immutable.
     No side-effect.
-    """
-
-    """
-    CACHE supports multiple config dict.
     """
     CACHE = {"dummy": ({1: None}, {})}
 

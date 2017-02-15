@@ -1,8 +1,8 @@
 import copy
 import re
 
-from common_func import modify_dict_result
-from key_monad import key_monad
+from .common_func import modify_dict_result
+from .key_monad import key_monad
 
 NFS_REGEX = r"^nfs://"
 NFS_REGEX_C = re.compile(NFS_REGEX, flags=re.IGNORECASE)

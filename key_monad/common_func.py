@@ -76,11 +76,11 @@ def modify_dict_result(result, keys, regex_c, replace_value):
         return act_assign
 
     def current_layer_check(current_result):
-        key_list = filter(lambda k: k in keys, current_result)
+        key_list = [k for k in current_result if k in keys]
         modified_value_key = \
             zip(key_list, map(extract_value(current_result), key_list))
 
-        if filter(lambda t: t[1], modified_value_key):
+        if [t for t in modified_value_key if t[1]]:
             if not cow_result:
                 cow_result.update(copy.copy(result))
 
@@ -96,7 +96,7 @@ def modify_dict_result(result, keys, regex_c, replace_value):
     def loop_dict(inner_result):
         current_layer_check(inner_result)
 
-        for k, v in inner_result.iteritems():
+        for k, _ in inner_result.iteritems():
             if isinstance(inner_result[k], dict):
                 key_path_queue.append(k)
                 loop_dict(inner_result[k])
@@ -130,7 +130,7 @@ def check_dict_result(result, regex_c, sep=r"/"):
         checked_value_key = \
             zip(key_list, map(extract_value(current_result), key_list))
 
-        value_match_key_value = filter(lambda t: t[1], checked_value_key)
+        value_match_key_value = [t for t in checked_value_key if t[1]]
         match_key_path_list = []
 
         for k, _ in value_match_key_value:
@@ -144,7 +144,7 @@ def check_dict_result(result, regex_c, sep=r"/"):
     def loop_dict(inner_result, keypath, match_key_path_list):
         match_key_path_list.extend(
             current_layer_check(inner_result, keypath))
-        for k, v in inner_result.iteritems():
+        for k, _ in inner_result.iteritems():
             if isinstance(inner_result[k], dict):
                 loop_dict(
                     inner_result[k],

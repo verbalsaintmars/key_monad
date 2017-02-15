@@ -1,6 +1,6 @@
 import re
-from common_func import check_dict_result
-from key_monad import key_monad
+from .common_func import check_dict_result
+from .key_monad import key_monad
 
 EMPTY_REGEX = r"^$"
 EMPTY_REGEX_C = re.compile(EMPTY_REGEX)
