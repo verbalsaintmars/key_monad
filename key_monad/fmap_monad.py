@@ -2,6 +2,7 @@ import copy
 import re
 
 from .common_func import modify_dict_result
+from .common_func import remove_root_duplicate
 from .key_monad import key_monad
 
 NFS_REGEX = r"^nfs://"
@@ -29,11 +30,10 @@ def default_root_user_value_map(current_keymonad):
         current_keymonad.result,
         ROOTUSER_KEYS,
         EMPTY_REGEX_C,
-        r"PICACHO")
+        r"/root/root")
     return key_monad(
         current_keymonad.absolute_key,
         modified_result,
-
         current_keymonad.key_separator)
 
 
@@ -44,6 +44,29 @@ def remove_nfs_protocol_map(current_keymonad):
         CHECK_NFS_KEYS,
         NFS_REGEX_C,
         "")
+    return key_monad(
+        current_keymonad.absolute_key,
+        modified_result,
+        current_keymonad.key_separator)
+
+
+def default_site_type_map(current_keymonad):
+    """ Setup default site_type to 'dev' """
+    SITE_TYPE_KEYS = ("site_type",)
+    modified_result = modify_dict_result(
+        current_keymonad.result,
+        SITE_TYPE_KEYS,
+        EMPTY_REGEX_C,
+        r"dev")
+    return key_monad(
+        current_keymonad.absolute_key,
+        modified_result,
+        current_keymonad.key_separator)
+
+
+def remove_duplicate_entry_map(current_keymonad):
+    modified_result = remove_root_duplicate(
+        current_keymonad.result)
     return key_monad(
         current_keymonad.absolute_key,
         modified_result,

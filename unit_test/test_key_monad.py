@@ -2,6 +2,7 @@
 import unittest
 from compute.lib.key_monad.fmap_monad import aggregate_map
 from compute.lib.key_monad.fmap_monad import default_root_user_value_map
+from compute.lib.key_monad.fmap_monad import remove_duplicate_entry_map
 from compute.lib.key_monad.fmap_monad import remove_nfs_protocol_map
 from compute.lib.key_monad.generate_config import generate_config
 from compute.lib.key_monad.key_monad import key_monad
@@ -30,9 +31,24 @@ INSTALL_JSON_2_DICT = {
             "SUBKEY_LAYER_3": {
                 "SUBKEY_LAYER_4": {
                     "key_2_nested_1": "key_2_nested_1",
-                    "key_2_nested_2": "",
+                    "key_2_nested_2": ""
                 }
             }
+        }
+    }
+}
+
+INSTALL_JSON_3_DICT = {
+    "key_1": "key1",
+    "key_2": {
+        "key_1": "subkey1"
+    },
+    "key_3": {
+        "key_1": "subkey1",
+        "key_4": 4,
+        "key_5": {
+            "key_1": "subkey_1",
+            "key_6": 6
         }
     }
 }
@@ -44,6 +60,7 @@ class TestKeyMonadV2(unittest.TestCase):
     def setUpClass(cls):
         cls.json_dict_1 = INSTALL_JSON_1_DICT
         cls.json_dict_2 = INSTALL_JSON_2_DICT
+        cls.json_dict_3 = INSTALL_JSON_3_DICT
 
     def test_generate_config(self):
         keys_from_json_dict_1 = (
@@ -145,8 +162,8 @@ class TestKeyMonadV2(unittest.TestCase):
 
         expect_absolute_keys = set(['rootuser'])
 
-        # the rootuser has a default value, i.e: PICACHO
-        expect_result = {'rootuser': 'PICACHO'}
+        # the rootuser has a default value, i.e: /root/root
+        expect_result = {'rootuser': '/root/root'}
 
         self.assertTrue(expect_keys == set(keys))
         self.assertTrue(expect_absolute_keys == set(absolute_keys))
@@ -167,6 +184,15 @@ class TestKeyMonadV2(unittest.TestCase):
 
         self.assertTrue(expect_keys == set(keys))
         self.assertTrue(expect_absolute_keys == set(absolute_keys))
+        self.assertTrue(expect_result == result)
+
+    def test_remove_duplicate_entry_map(self):
+        km = remove_duplicate_entry_map(
+            key_monad("/", self.json_dict_3))
+        result = km.result
+        expect_result = {"key_1": "key1", "key_3": {
+            "key_4": 4, "key_5": {"key_6": 6}}}
+
         self.assertTrue(expect_result == result)
 
     def test_validate_for_none_map(self):

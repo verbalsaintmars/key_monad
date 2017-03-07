@@ -3,6 +3,60 @@ import json
 import os
 
 
+def remove_root_duplicate(result):
+    """
+    COW enabled while modifing result.
+    :param result: dict
+    e.g
+        original dict:
+        {'A': 1, 'B': {'A': 3, 'C': {'B': {'A': 4}}, 'D': 4}}
+        remote root duplicate dict:
+        {'A': 1, 'B': {'D': 4}}
+    """
+    cow_result = {}
+    root_keys = result.keys()
+    key_path_queue = []
+
+    def current_layer_check(current_result):
+        duplicate_keys = [k for k in current_result if k in root_keys]
+
+        if duplicate_keys:
+            if not cow_result:
+                cow_result.update(copy.deepcopy(result))
+
+            key_path_index = 0
+            c_result = cow_result
+
+            while key_path_index < len(key_path_queue):
+                if not c_result:
+                    break
+
+                current = c_result
+                c_result = c_result.get(
+                    key_path_queue[key_path_index], None)
+
+                if key_path_index == len(key_path_queue) - 1:
+                    if c_result:
+                        for k in duplicate_keys:
+                            del c_result[k]
+                        if not c_result:
+                            del current[key_path_queue[key_path_index]]
+                key_path_index += 1
+
+    def loop_dict(inner_result, first_layer=True):
+        if not first_layer:
+            current_layer_check(inner_result)
+
+        for k in inner_result:
+            if isinstance(inner_result[k], dict):
+                key_path_queue.append(k)
+                loop_dict(inner_result[k], False)
+                key_path_queue.pop()
+
+    loop_dict(result)
+    return cow_result if cow_result else result
+
+
 def get_dict_obj(config, key, create=False, separator='/'):
     current = config
 
@@ -82,7 +136,7 @@ def modify_dict_result(result, keys, regex_c, replace_value):
 
         if [t for t in modified_value_key if t[1]]:
             if not cow_result:
-                cow_result.update(copy.copy(result))
+                cow_result.update(copy.deepcopy(result))
 
             key_path_index = 0
             c_result = cow_result
